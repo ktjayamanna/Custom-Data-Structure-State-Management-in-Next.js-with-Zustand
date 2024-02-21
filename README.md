@@ -1,7 +1,3 @@
-Below is a template for a README.md file that outlines your project, which is an exploration of managing custom data structures with Zustand in a Next.js application. This README template includes sections that describe the project, installation steps, usage examples, and contribution guidelines, aiming to provide clarity on the project's purpose and how to engage with it.
-
----
-
 # Custom Data Structure State Management in Next.js with Zustand
 
 This project demonstrates an effective strategy for managing custom data structures—specifically, a stack—within a Next.js application using Zustand for global state management. The goal is to explore and establish the best practices for synchronizing a custom data structure between local component state and global Zustand store, ensuring UI consistency and reactivity.
