@@ -3,12 +3,10 @@ export default class Stack {
     this.items = items;
   }
 
-  // Add an element to the top of the stack
   push(element) {
     this.items.push(element);
   }
 
-  // Remove the top element from the stack and return it
   pop() {
     if (this.isEmpty()) {
       return "Stack is empty";
@@ -16,7 +14,6 @@ export default class Stack {
     return this.items.pop();
   }
 
-  // View the top element of the stack without removing it
   peek() {
     if (this.isEmpty()) {
       return "Stack is empty";
@@ -24,12 +21,10 @@ export default class Stack {
     return this.items[this.items.length - 1];
   }
 
-  // Check if the stack is empty
   isEmpty() {
     return this.items.length === 0;
   }
 
-  // Return the number of elements in the stack
   size() {
     return this.items.length;
   }
@@ -47,8 +42,13 @@ export default class Stack {
   printStack() {
     return this.items.toString();
   }
+
+  /**
+   * Clones the stack by creating a new stack with a copy of the current items.
+   *Used for deep cloning to force re-rendering.
+   * @return {Stack} A new stack with a copy of the current items.
+   */
   clone() {
-    // Correctly create a new Stack instance with the current items
     return new Stack([...this.items]);
   }
 }

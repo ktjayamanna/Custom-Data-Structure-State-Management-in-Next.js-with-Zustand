@@ -3,7 +3,6 @@ import useStore from "../store"; // Adjust the path as necessary
 import Stack from "../dataStructures/stack";
 
 const DataViewComponent = () => {
-  // Local state for the stack
   const [localStack, setLocalStack] = useState(() => new Stack());
 
   // Access the setter from the Zustand store to update the global stack
@@ -11,7 +10,6 @@ const DataViewComponent = () => {
 
   // On component mount, initialize the local stack with the global stack's items
   useEffect(() => {
-    // Assuming globalStack is an instance of Stack or similar structure
     const globalStack = useStore.getState().dataStack;
     const newStack = new Stack();
     newStack.items = [...globalStack.items];
@@ -31,7 +29,6 @@ const DataViewComponent = () => {
   };
 
   // Sync the local stack back to the global state on demand
-  // This can be triggered by a button or other event handlers as needed
   const handleSync = () => {
     console.log("before", useStore.getState().dataStack);
     syncStackWithGlobal(localStack);

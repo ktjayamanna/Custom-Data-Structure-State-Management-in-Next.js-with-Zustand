@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import Stack from "./dataStructures/stack"; // Ensure the path is correct
+import Stack from "./dataStructures/stack";
 
 const useStore = create((set) => ({
   // Initialize the dataStack with a new Stack instance
