@@ -1,6 +1,6 @@
 export default class Stack {
-  constructor() {
-    this.items = [];
+  constructor(items = []) {
+    this.items = items;
   }
 
   // Add an element to the top of the stack
@@ -46,5 +46,9 @@ export default class Stack {
   // Display the stack
   printStack() {
     return this.items.toString();
+  }
+  clone() {
+    // Correctly create a new Stack instance with the current items
+    return new Stack([...this.items]);
   }
 }

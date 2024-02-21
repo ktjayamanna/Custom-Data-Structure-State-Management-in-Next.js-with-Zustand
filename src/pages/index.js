@@ -18,17 +18,16 @@ const DataViewComponent = () => {
     setLocalStack(newStack);
   }, []);
 
-  // Define local methods to modify the local stack
   const localPushData = (newData) => {
-    const updatedStack = new Stack();
-    updatedStack.items = [...localStack.items, newData];
-    setLocalStack(updatedStack);
+    localStack.push(newData);
+    // Trigger state update with a new reference to ensure re-render
+    setLocalStack(localStack.clone());
   };
 
   const localPopData = () => {
-    const updatedStack = new Stack();
-    updatedStack.items = localStack.items.slice(0, -1);
-    setLocalStack(updatedStack);
+    localStack.pop();
+    // Trigger state update with a new reference to ensure re-render
+    setLocalStack(localStack.clone());
   };
 
   // Sync the local stack back to the global state on demand
