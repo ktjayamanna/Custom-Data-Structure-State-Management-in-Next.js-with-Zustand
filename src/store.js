@@ -1,31 +1,16 @@
 import { create } from "zustand";
-// import Stack from "./stack"; // Adjust the path as necessary
-import Stack from "./dataStructures/stack";
+import Stack from "./dataStructures/stack"; // Ensure the path is correct
 
-const useStore = create((set) => {
-  const dataStack = new Stack();
+const useStore = create((set) => ({
+  // Initialize the dataStack with a new Stack instance
+  dataStack: new Stack(),
 
-  return {
-    dataStack,
-    pushData: (newData) => {
-      dataStack.push(newData);
-      // Trigger Zustand state update to rerender components
-      set({ dataStack: dataStack });
-    },
-    popData: () => {
-      dataStack.pop();
-      // Trigger Zustand state update to rerender components
-      set({ dataStack: dataStack });
-    },
-    // This method directly accesses the Stack instance without Zustand's set
-    currentData: () => {
-      return dataStack.peek();
-    },
-    // Optional: Method to get the current size of the stack
-    size: () => {
-      return dataStack.size();
-    },
-  };
-});
+  // Method to set (update) the entire stack
+  setStack: (newStack) => set({ dataStack: newStack }),
+
+  // If you need to access the current data or size, you can still include these as getters
+  currentData: () => get().dataStack.peek(),
+  size: () => get().dataStack.size(),
+}));
 
 export default useStore;

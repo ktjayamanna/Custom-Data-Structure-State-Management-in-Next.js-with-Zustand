@@ -4,35 +4,39 @@ import Stack from "../dataStructures/stack";
 
 const DataViewComponent = () => {
   // Local state for the stack
-  const [localStack, setLocalStack] = useState(new Stack());
+  const [localStack, setLocalStack] = useState(() => new Stack());
 
-  // Access the global stack and actions from Zustand store
-  const {
-    dataStack: globalStack,
-    pushData,
-    popData,
-  } = useStore((state) => ({
-    dataStack: state.dataStack,
-    pushData: state.pushData,
-    popData: state.popData,
-  }));
+  // Access the setter from the Zustand store to update the global stack
+  const syncStackWithGlobal = useStore((state) => state.setStack);
 
-  // On component mount, copy the global stack to the local stack
+  // On component mount, initialize the local stack with the global stack's items
   useEffect(() => {
-    setLocalStack(globalStack);
-  }, [globalStack]);
+    // Assuming globalStack is an instance of Stack or similar structure
+    const globalStack = useStore.getState().dataStack;
+    const newStack = new Stack();
+    newStack.items = [...globalStack.items];
+    setLocalStack(newStack);
+  }, []);
 
   // Define local methods to modify the local stack
   const localPushData = (newData) => {
-    const newStack = new Stack();
-    newStack.items = [...localStack.items, newData]; // Copy and push new data
-    setLocalStack(newStack);
+    const updatedStack = new Stack();
+    updatedStack.items = [...localStack.items, newData];
+    setLocalStack(updatedStack);
   };
 
   const localPopData = () => {
-    const newStack = new Stack();
-    newStack.items = localStack.items.slice(0, -1); // Copy and pop data
-    setLocalStack(newStack);
+    const updatedStack = new Stack();
+    updatedStack.items = localStack.items.slice(0, -1);
+    setLocalStack(updatedStack);
+  };
+
+  // Sync the local stack back to the global state on demand
+  // This can be triggered by a button or other event handlers as needed
+  const handleSync = () => {
+    console.log("before", useStore.getState().dataStack);
+    syncStackWithGlobal(localStack);
+    console.log("after", useStore.getState().dataStack);
   };
 
   // Accessing current data and size from the local stack
@@ -72,6 +76,21 @@ const DataViewComponent = () => {
         }}
       >
         Back
+      </button>
+      {/* Optional: Button to sync the local stack back to the global state */}
+      <button
+        onClick={handleSync}
+        style={{
+          fontSize: "20px",
+          padding: "15px 30px",
+          borderRadius: "8px",
+          backgroundColor: "#f0f0f0",
+          border: "1px solid #ddd",
+          margin: "20px",
+          color: "#333",
+        }}
+      >
+        Sync with Global
       </button>
     </div>
   );
